@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Goalin',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFFFF1CB)),
       ),
       home: MyHomePage(),
     );

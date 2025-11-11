@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goalin/widgets/left_drawer.dart';
 
 
 class MyHomePage extends StatelessWidget{
@@ -17,6 +18,17 @@ class MyHomePage extends StatelessWidget{
     Widget build(BuildContext context){
         return Scaffold(
             
+             appBar: AppBar(
+                title: const Text(
+                  'Goalin',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+            drawer: LeftDrawer(),
             body: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -59,6 +71,8 @@ class MyHomePage extends StatelessWidget{
                 
             ),
             backgroundColor: Color(0xFFFFF1CB),
+
+        
         );
     }
 

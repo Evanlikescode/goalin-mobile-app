@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:goalin/widgets/left_drawer.dart';
 
 class ProductFormPage extends StatefulWidget{
     const ProductFormPage({super.key});
@@ -29,12 +30,12 @@ class _ProductFormPageState extends State<ProductFormPage>{
         return Scaffold(
             appBar: AppBar(
                 title: const Center(
-                    child: Text('Form Add Product'),
+                    child: Text('Form Add Product', style: TextStyle(fontWeight: FontWeight.bold),),
                 ),
-                backgroundColor: Color(0xFFB7A3E3),
-                foregroundColor: Color(0xFFFF8F8F),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Colors.white,
             ),
-
+            drawer: LeftDrawer(),
             body: Form(
                 key: _formKey, // handler form state, validasi form, penyimpanan form
                 child: SingleChildScrollView(
@@ -188,8 +189,8 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
                                     decoration: InputDecoration(
-                                        hintText: "Thumbanil Produk",
-                                        labelText: "Thumbanil Produk",
+                                        hintText: "Thumbnail Produk",
+                                        labelText: "Thumbnail Produk",
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(5.0),
                                             borderSide: BorderSide(color: Colors.black)
@@ -221,14 +222,16 @@ class _ProductFormPageState extends State<ProductFormPage>{
                             Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SwitchListTile(
-                                title: const Text("Produk Unggulan"),
-                                value: _isFeatured,
-                                onChanged: (bool value) {
-                                    setState(() {
-                                        _isFeatured = value;
-                                    });
-                                },
+                                    title: const Text("Produk Unggulan"),
+                                    
+                                    value: _isFeatured,
+                                    onChanged: (bool value) {
+                                        setState(() {
+                                            _isFeatured = value;
+                                        });
+                                    },
                                 ),
+                            
                             ),
 
 
@@ -240,8 +243,7 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                     padding: const EdgeInsets.all(8.0),
                                     child: ElevatedButton(
                                     style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(Colors.indigo),
+                                        backgroundColor: MaterialStateProperty.all(Color(0xFFB7A3E3)),
                                     ),
                                     onPressed: () {
                                         if (_formKey.currentState!.validate()) {
@@ -258,7 +260,7 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                                     Text('Nama Produk: $_name'),
                                                     Text('Harga Produk: $_price'),
                                                     Text('Deskripsi Produk: $_desc'),
-                                                    Text('Kategori: $_category'),
+                                                    Text('Kategori: ${_categories[_category]}'),
                                                     Text('Thumbnail: $_thumbnail'),
                                                     Text('Unggulan: ${_isFeatured ? "Ya" : "Tidak"}'),
                                                     ],
