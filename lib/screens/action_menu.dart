@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/widgets/left_drawer.dart';
-
+import 'package:goalin/widgets/menu_card.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 
 class MyHomePage extends StatelessWidget{
     
@@ -10,9 +11,9 @@ class MyHomePage extends StatelessWidget{
     final String nama = "Evan";
 
     final List<ButtonHomePage> buttons = [
-        ButtonHomePage("All Products", Icons.store, Colors.blue),
-        ButtonHomePage("My Products", Icons.inventory, Colors.green),
-        ButtonHomePage("Create Product", Icons.add_circle, Colors.red),
+        ButtonHomePage("All Products", Icons.store, appColors['fourth']!),
+        ButtonHomePage("My Products", Icons.inventory, appColors['first']!),
+        ButtonHomePage("Create Product", Icons.add_circle, appColors['third']!),
     ];
     @override
     Widget build(BuildContext context){
@@ -79,58 +80,3 @@ class MyHomePage extends StatelessWidget{
 
 }
 
-
-class ButtonHomePage{
-    final String name;
-    final IconData icon;
-    final Color color;
-
-    ButtonHomePage(this.name, this.icon, this.color);
-}
-
-class ButtonAction extends StatelessWidget{
-
-    final ButtonHomePage buttonHome;
-
-    const ButtonAction(this.buttonHome, {super.key});
-        @override
-    Widget build(BuildContext context){
-        return Material(
-            color: buttonHome.color,
-            borderRadius: BorderRadius.circular(25),
-            elevation: 20.0,
-            child: InkWell(
-                onTap: () {
-                    ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(
-                            SnackBar(content: Text("Kamu telah menekan tombol ${buttonHome.name} "))
-                        );
-                },
-                child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                Icon(
-                                    buttonHome.icon,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                ),
-                                const Padding(padding: EdgeInsets.all(3)),
-                                Text(
-                                    buttonHome.name,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white),
-                                )
-                            ],
-                        ),
-                    ),
-                ),
-            ),
-
-        );
-    }
-
-}

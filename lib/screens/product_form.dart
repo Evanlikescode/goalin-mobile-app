@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 import 'package:goalin/widgets/left_drawer.dart';
 
 class ProductFormPage extends StatefulWidget{
@@ -66,6 +67,11 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                         if(value == null || value.isEmpty){
                                             return "Nama Produk tidak boleh kosong!";
                                         }
+
+                                        if(value.length > 50){
+                                            return "Nama produk maksimum 50 karakter!";
+                                        }
+
                                         return null;
 
                                     },
@@ -145,8 +151,8 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                 padding: const EdgeInsets.all(8.0),
                                 child: DropdownButtonFormField<String>(
                                     decoration: InputDecoration(
-                                        hintText: "Deskripsi Produk",
-                                        labelText: "Deskripsi Produk",
+                                        hintText: "Kategori",
+                                        labelText: "Kategori",
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(5.0),
                                             borderSide: BorderSide(color: Colors.black)
@@ -243,7 +249,7 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                     padding: const EdgeInsets.all(8.0),
                                     child: ElevatedButton(
                                     style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all(Color(0xFFB7A3E3)),
+                                        backgroundColor: MaterialStateProperty.all(appColors['first']),
                                     ),
                                     onPressed: () {
                                         if (_formKey.currentState!.validate()) {
@@ -270,8 +276,8 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                                 TextButton(
                                                     child: const Text('OK'),
                                                     onPressed: () {
-                                                    Navigator.pop(context);
-                                                    _formKey.currentState!.reset();
+                                                      Navigator.pop(context);
+                                                      _formKey.currentState!.reset();
                                                     },
                                                 ),
                                                 ],

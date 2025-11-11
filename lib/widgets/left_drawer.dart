@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/screens/action_menu.dart';
 import 'package:goalin/screens/product_form.dart';
+import 'package:goalin/screens/user_form.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 
 class LeftDrawer extends StatelessWidget {
 
@@ -12,9 +14,9 @@ class LeftDrawer extends StatelessWidget {
             child: ListView(
                 children: [
 
-                    const DrawerHeader(
+                    DrawerHeader(
                         decoration: BoxDecoration(
-                            color: Color(0xFFC2E2FA)
+                            color: appColors['background']!
                         ),
 
                         child: Column(
@@ -29,7 +31,7 @@ class LeftDrawer extends StatelessWidget {
                                     ),
                                 ),
                                 Padding(padding: EdgeInsets.all(10)),
-                                Text("Your Football Store", textAlign: TextAlign.center)
+                                Text("Your Football Store", textAlign: TextAlign.center, style: TextStyle(color: appColors['second']),)
                             ],
                         ),
 
@@ -49,7 +51,7 @@ class LeftDrawer extends StatelessWidget {
                     ),
 
 
-                     ListTile(
+                    ListTile(
                         leading: const Icon(Icons.post_add),
                         title: const Text('Add Product'),
                         onTap: () {
@@ -60,7 +62,22 @@ class LeftDrawer extends StatelessWidget {
                                 )
                             );
                         },
-                    )
+                    ),
+
+                    ListTile(
+                        leading: const Icon(Icons.settings),
+                        title: const Text('User Settings'),
+                        onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder:  (context) => UserFormPage()
+                                )
+                            );
+                        },
+                    ),
+
+                    
 
 
                 ],

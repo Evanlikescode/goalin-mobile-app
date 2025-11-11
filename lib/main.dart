@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/screens/action_menu.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Goalin',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFFFF1CB)),
+        colorScheme: ColorScheme.fromSeed(seedColor: appColors['background']!),
       ),
       home: MyHomePage(),
     );
