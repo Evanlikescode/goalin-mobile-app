@@ -276,7 +276,6 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                                 TextButton(
                                                     child: const Text('OK'),
                                                     onPressed: () {
-                                                      Navigator.pop(context);
                                                       _formKey.currentState!.reset();
                                                     },
                                                 ),
@@ -291,6 +290,25 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                         "Simpan",
                                         style: TextStyle(color: Colors.white),
                                     ),
+                                    ),
+                                ),
+                            ),
+
+                            Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all(appColors['third']),
+                                      ),
+                                      onPressed: () {
+                                          Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                          "Back",
+                                          style: TextStyle(color: Colors.black),
+                                      ),
                                     ),
                                 ),
                             ),
