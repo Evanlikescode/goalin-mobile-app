@@ -16,7 +16,7 @@ class LeftDrawer extends StatelessWidget {
 
                     DrawerHeader(
                         decoration: BoxDecoration(
-                            color: appColors['background']!
+                            color: Theme.of(context).colorScheme.primary
                         ),
 
                         child: Column(
