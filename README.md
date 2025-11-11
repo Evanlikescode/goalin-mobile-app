@@ -44,3 +44,34 @@ BuildContext adalah suatu objek yang merepresentasikan lokasi suatu widget dalam
 - Hot reload adalah operasi yang memperbarui perubahan kode ke dalam aplikasi tanpa memuat ulang aplikasi dari awal sehingga setiap state yang sudah mengalami perubahan sebelumnya tidak akan mengalami reset
 - Hot restart adalah operasi yang memuat ulang seluruh aplikasi dari awal sehingga setiap perubahan tetap dapat terjadi dengan kondisi state akan mengalami reset.
 - Maka dari itu, perbedaannya terletak pada hot reload yang mempertahankan state dan hot restart yang mengabaikan state yang sedang berlangsung. Lalu, hot reload umumnya digunakan ketika ada pembaharuan UI, sedangkan hot restart dilakukan ketika terdapat perubahan pada struktur main / root aplikasi.
+
+# Tugas - 8
+## Perbedaan Navigator.push() dan Navigator.pushReplacement()
+Salah satu widget untuk navigasi di flutter adalah menggunakan Navigator. Widget ini memiliki konsep, seperti struktur data Stack atau tumpukan. Maka dari itu, Navigator menerapkan konsep LIFO (Last In First Out).
+
+Metode untuk menginputkan suatu page / halaman ke dalam navigasi adalah diantaranya, .push() dan .pushReplacement(). Metode .push() berfungsi untuk menambahkan halaman baru di atas halaman sebelumnya, sedangkan .pushReplacement() berfungsi untuk mengganti halaman saat ini, yang sedang diakses, dengan halaman baru. Maka, halaman yang sebelumnya diakses akan hilang / tidak ditumpuk dengan halaman baru.
+
+## Cara memanfaatkan hierarchy widget untuk membangun struktur halaman yang konsisten
+- Setiap halaman pada folder screens, saya menerapkan Scaffold untuk membangun struktur dari halaman tersebut
+- Di dalam Scaffold, saya menerapkan adanya appBar (seperti header halaman), drawer (seperti sidebar), dan body (isi konten)
+- Setiap appBar akan inherit warna background / theme dari root context dengan tipe primary
+- Implementasi drawer setiap halaman akan inisiasi kelas yang sama, yakni LeftDrawer (yang sudah terlebih dahulu saya buat di folder widgets)
+
+
+## Kelebihan layout widget, seperti Padding, SingleChildScrollView, dan ListView
+- **Padding** 
+    - Widget yang berguna untuk mengatur jarak dalam sehingga widget anaknya dapat terlihat proporsional
+    - Contoh penggunaanya adalah pada pembuatan setiap input Form menggunakan widget padding untuk membedakan form inputnya yang juga terikat sebagai children dari Column
+
+- **SingleChildScrollView** 
+    - Widget yang memungkinkan user untuk melakukan scrolling atau penggeseran terhadap konten yang tingginya melebihi batas. 
+    - Saya mengimplementasikannya pada halaman pengisian form karena jika widget input formnya semakin banyak, maka user dapat melakukan scrolling ke atas.
+
+- **ListView**
+    - Widget yang digunakan untuk menampilkan daftar suatu item yang banyak dan tidak perlu menggunakan layouting dengan Column untuk mengatasi elemen widget child yang begitu banyak. Implementasi widget ini, saya lakukan di drawer karena umumnya drawer memiliki elemen navigasi yang banyak (diwakili dengan ListTile) dan setiap drawer memiliki header penamaannya.
+
+## Cara saya menyesuaikan warna tema agar aplikasi memiliki identitas visual yang konsisten
+- Membuat file bernama goalin_colors.dart pada folder lib/utils untuk menampung / membuat dictionary yang berisi kumpulan warna utama yang saya gunakan
+- Mengimplementasikan warna-warna dari file tersebut pada setiap halaman dengan mengakses value berdasarkan key dari dictionary tersebut
+- Selain itu, saya juga menggunakan Theme.of(context).colorScheme.primary pada setiap header halaman sehingga warnanya akan konsisten dengan root / parent utama.
+
