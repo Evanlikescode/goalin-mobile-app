@@ -276,6 +276,7 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                                 TextButton(
                                                     child: const Text('OK'),
                                                     onPressed: () {
+                                                      Navigator.pop(context);
                                                       _formKey.currentState!.reset();
                                                     },
                                                 ),
