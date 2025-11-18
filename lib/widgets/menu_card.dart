@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:goalin/screens/login.dart';
 import 'package:goalin/screens/product_form.dart';
+
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ButtonHomePage{
     final String name;
@@ -16,12 +20,13 @@ class ButtonAction extends StatelessWidget{
     const ButtonAction(this.buttonHome, {super.key});
     @override
     Widget build(BuildContext context){
+        final request = context.watch<CookieRequest>();
         return Material(
             color: buttonHome.color,
             borderRadius: BorderRadius.circular(25),
             elevation: 20.0,
             child: InkWell(
-                onTap: () {
+                onTap: () async {
                     ScaffoldMessenger.of(context)
                         ..hideCurrentSnackBar()
                         ..showSnackBar(
@@ -30,6 +35,28 @@ class ButtonAction extends StatelessWidget{
 
                         if(buttonHome.name == "Create Product"){
                             Navigator.push(context, MaterialPageRoute(builder: (context) => ProductFormPage()));
+                        } else if(buttonHome.name == "Logout"){
+                            final response = await request.logout(
+                                "http://localhost:8000/auth/logout/");
+                            String message = response["message"];
+                            if (context.mounted) {
+                                if (response['status']) {
+                                    String dataUsername = response["username"];
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text("$message See you again, $dataUsername."),
+                                    ));
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                                    );
+                                } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(message),
+                                        ),
+                                    );
+                                }
+                            }
                         }
                 },
                 child: Container(

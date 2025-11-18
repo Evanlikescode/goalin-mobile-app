@@ -14,6 +14,7 @@ class MyHomePage extends StatelessWidget{
         ButtonHomePage("All Products", Icons.store, appColors['fourth']!),
         ButtonHomePage("My Products", Icons.inventory, appColors['first']!),
         ButtonHomePage("Create Product", Icons.add_circle, appColors['third']!),
+        ButtonHomePage("Logout", Icons.logout, appColors['background']!),
     ];
     @override
     Widget build(BuildContext context){
@@ -55,7 +56,7 @@ class MyHomePage extends StatelessWidget{
                                     padding: const EdgeInsets.all(34.0),
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
-                                    crossAxisCount: 3,
+                                    crossAxisCount: 4,
                                     shrinkWrap: true,
                                     children: buttons.map((ButtonHomePage button) {
                                         return ButtonAction(button);
