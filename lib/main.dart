@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:goalin/screens/action_menu.dart';
+import 'package:goalin/screens/login.dart';
 import 'package:goalin/utils/goalin_colors.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -11,13 +13,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Goalin',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: appColors['background']!),
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+
+      child: MaterialApp(
+        title: 'Goalin',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: appColors['background']!),
+        ),
+        home: LoginApp(),
       ),
-      home: MyHomePage(),
     );
   }
 }
