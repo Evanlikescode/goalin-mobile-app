@@ -75,3 +75,79 @@ Metode untuk menginputkan suatu page / halaman ke dalam navigasi adalah diantara
 - Mengimplementasikan warna-warna dari file tersebut pada setiap halaman dengan mengakses value berdasarkan key dari dictionary tersebut
 - Selain itu, saya juga menggunakan Theme.of(context).colorScheme.primary pada setiap header halaman sehingga warnanya akan konsisten dengan root / parent utama.
 
+
+# Tugas - 9
+## Alasan Menggunakan model pada dart saat mengambil/mengirim JSON
+Adanya penggunaan model pada flutter dart akan menjaga setiap integritas data, mulai dari tipe data, nulitas, dan konsistensi pengiriman/pengambilan data.
+
+Hal tersebut dapat dilihat ketika saya mendefinisikan tipe data dari setiap field dari data yang akan saya manipulasi, kemudian penambahan required pada setiap field, serta kejelasan struktur model yang menaungi field apa saja.
+
+Maka dari itu, jika langsung menggunakan Map<String,Dynamic> bisa saja data yang dimanipulasi (fetch / post) mengalami inkonsistensi dan error.
+
+## Fungsi package http dan CookieRequest
+package http digunakan untuk memberikan akses pengambilan / pengiriman informasi kepada flutter agar setiap endpoint di internet dapat digunakan.
+
+Lalu, CookieRequest digunakan untuk menyimpan session user yang login ke sistem django sehingga user tidak perlu login berulang kali dan data dapat digunakan selama user belum logout. Selain itu, cookierequest di sini juga digunakan tidak hanya menyimpan session, tetapi dapat digunakan juga untuk mengirim / mengambil data dari/ke sistem django, terutama yang membutuhkan session user.
+
+## Instance CookieRequest harus dibagikan ke semua komponen aplikasi flutter
+Alasannya adalah agar setiap komponen aplikasi memiliki session state yang sama sehingga setiap kali request ke sistem django, user tetap terautentikasi. Lalu, hal ini juga menjaga konsistensi keadaan user apakah sudah login atau belum.
+
+## Penambahan 10.0.2.2 pada ALLOWED HOSTS harus dilakukan
+Alasannya adalah karena emulator host machine tidak memiliki host yang sama, seperti localhost sehingga jika developer ingin mengakses aplikasi secara emulator dan kebutuhan aplikasi juga perlu terintegrasi dengan sistem django, maka penambahan 10.0.2.2 pada ALLOWED HOST harus dilakukan agar sistem django mengenalnya.
+
+Jika ini dilanggar, developer yang menjalankan emulator dan ingin mengakses data pada sistem django akan ditolak karena django tidak mengenal host tersebut.
+
+## Pengaktifan CORS dan SameSite/Cookie harus dilakukan
+Alasannya adalah karena setiap data yang didapatkan / dikirimkan flutter berdasarkan API sistem django dan flutter adalah aplikasi eksternal (bukan bagian dari django), CORS harus di-allow all agar setiap pihak eksternal dapat mengakses endpoint django (di sini, kasusnya adalah flutter).
+
+Pengaturan Cookie/session juga perlu dilakukan agar setiap sistem yang login / authenticated di luar sistem django secara internal dapat berlangsung dan statenya konsisten terjaga di sistem django. Maka, user dapat mengakses setiap data dari sistem django secara baik.
+
+Jika CORS dilanggar, setiap request external akan ditolak.
+Jika Cookie/session tidak di-set, maka sistem autentikasi tidak dapat berjalan sebagaimana mestinya.
+
+## Penambahan izin akses internet pada Android harus dilakukan 
+Alasannya adalah agar aplikasi flutter dapat mengakses internet, dalam hal ini mengakses gambar serta API dari sistem django.
+
+Jika dilanggar, maka flutter akan offline dari segala bentuk request internet.
+
+## Mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+    1. Flutter input pada controller
+    2. Flutter send request ke django via API
+    3. Django receive request dari flutter
+    4. Django mengirimkan respons ke flutter
+    5. Flutter menerima respons dari Django
+    6. Flutter mengubah JSON ke model dart
+    7. Flutter menampilkan data ke komponen tujuan
+
+## Mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+     -- register
+    1. Flutter mengisi controller register
+    2. Flutter postJson ke django
+    3. Django menerima request dan membuat user
+    4. Django mengirimkan respons
+    5. Flutter menerima respons dan menyimpan di session
+
+    -- login
+    1. Flutter mengisi controller login
+    2. Flutter mengirimkan request ke django
+    3. Django menerima request dan authenticate data user
+    4. Django mengirimkan respons
+    5. Flutter menerima respons dan menyimpan di session
+    6. Flutter membuat state user sudah login
+
+    -- logout
+    1. Flutter mengirimkan request logout ke django
+    2. Django menerima request dan menghapus session user
+    4. Django mengirimkan respons
+    5. Flutter menerima respons dan menghapus session state user
+
+## Cara implementasi tugas
+    1. Menambahkan aplikasi authentication pada django serta membuat fungsi autentikasi yang Flutter friendly (Jsonresponse)
+    2. Modifikasi request show product all dan my pada main app agar bisa diakses flutter (Jsonresponse)
+    3. Menginisiasi CookieRequest pada flutter pada setiap screens
+    4. Membuat sistem login, register, dan logout
+    5. Menyesuaikan homepage ke login terlebih dahulu agar terautentikasi
+    6. Membuat model/product.dart 
+    7. Mengimplementasikan show all product and my product di flutter
+    8. menyesuaikan button menu dan drawer element agar href ke setiap komponen
+    9. Menyesuaikan endpoint product form agar dapat membuat product
