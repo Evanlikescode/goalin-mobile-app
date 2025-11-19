@@ -14,7 +14,7 @@ class ProductEntryListPage extends StatefulWidget {
 }
 
 class _ProductEntryListPageState extends State<ProductEntryListPage> {
-  Future<List<ProductEntry>> fetchNews(CookieRequest request) async {
+  Future<List<ProductEntry>> fetchProduct(CookieRequest request) async {
     
     final response = await request.get('http://localhost:8000/json/dart/product/');
     
@@ -38,7 +38,7 @@ class _ProductEntryListPageState extends State<ProductEntryListPage> {
       ),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
-        future: fetchNews(request),
+        future: fetchProduct(request),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null || !snapshot.hasData) {
               return const Column(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/screens/action_menu.dart';
+import 'package:goalin/screens/product_entry_list.dart';
+import 'package:goalin/screens/product_entry_my_list.dart';
 import 'package:goalin/screens/product_form.dart';
-import 'package:goalin/screens/user_form.dart';
 import 'package:goalin/utils/goalin_colors.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -65,13 +66,26 @@ class LeftDrawer extends StatelessWidget {
                     ),
 
                     ListTile(
-                        leading: const Icon(Icons.settings),
-                        title: const Text('User Settings'),
+                        leading: const Icon(Icons.shopping_bag),
+                        title: const Text('All Product'),
                         onTap: () {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder:  (context) => UserFormPage()
+                                    builder:  (context) => ProductEntryListPage()
+                                )
+                            );
+                        },
+                    ),
+
+                    ListTile(
+                        leading: const Icon(Icons.shopping_bag_outlined),
+                        title: const Text('My Product'),
+                        onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder:  (context) => ProductEntryListMyPage()
                                 )
                             );
                         },
