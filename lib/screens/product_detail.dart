@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/models/product.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductEntry product;
@@ -15,6 +16,10 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _isFeatured = "not featured";
+    if (product.isFeatured){
+      _isFeatured = "featured";
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('product Detail'),
@@ -47,22 +52,65 @@ class ProductDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Featured badge
-                  if (product.isFeatured)
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                       margin: const EdgeInsets.only(bottom: 12.0),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: const Text(
-                        'Featured',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
+                      
+                      child: 
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: appColors['first'],
+                                borderRadius: BorderRadius.circular(40.0),
+                              
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                              margin: const EdgeInsets.only(right: 5.0),
+                              child:   Text(
+                                _isFeatured,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: appColors['second'],
+                                borderRadius: BorderRadius.circular(40.0),
+                              
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                              child:  Text(
+                                "${product.price} rupiah " ,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: appColors['second'],
+                                borderRadius: BorderRadius.circular(40.0),
+                              
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                              child:  Text(
+                                "${product.stock} buah " ,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                           
+                           
+                          ] 
+                            
+                        )
+                      
                     ),
 
                   // Title

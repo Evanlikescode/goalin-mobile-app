@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/models/product.dart';
+import 'package:goalin/utils/goalin_colors.dart';
 
 class ProductEntryCard extends StatelessWidget {
   final ProductEntry product;
@@ -39,7 +40,7 @@ class ProductEntryCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
                       height: 150,
-                      color: Colors.grey[300],
+                      color: appColors['fourth'],
                       child: const Center(child: Icon(Icons.broken_image)),
                     ),
                   ),
@@ -59,7 +60,16 @@ class ProductEntryCard extends StatelessWidget {
                 // Category
                 Text('Category: ${product.category}'),
                 const SizedBox(height: 6),
+               
+                // Price
+                Text('Price: ${product.price}'),
+                const SizedBox(height: 6),
 
+
+                // Stok
+                Text('Stok: ${product.stock}'),
+                const SizedBox(height: 6),
+    
                 // Description preview
                 Text(
                   product.description.length > 100
@@ -73,10 +83,10 @@ class ProductEntryCard extends StatelessWidget {
 
                 // Featured indicator
                 if (product.isFeatured)
-                  const Text(
+                  Text(
                     'Featured',
                     style: TextStyle(
-                      color: Colors.amber,
+                      color: appColors['first'],
                       fontWeight: FontWeight.bold
                     ),
                   ),
