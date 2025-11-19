@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goalin/screens/login.dart';
+import 'package:goalin/screens/product_entry_list.dart';
+import 'package:goalin/screens/product_entry_my_list.dart';
 import 'package:goalin/screens/product_form.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -57,6 +59,12 @@ class ButtonAction extends StatelessWidget{
                                     );
                                 }
                             }
+                        } else if (buttonHome.name == "All Products"){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductEntryListPage()));
+
+                        } else if (buttonHome.name == "My Products"){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductEntryListMyPage()));
+                          
                         }
                 },
                 child: Container(

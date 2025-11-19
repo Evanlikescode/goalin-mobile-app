@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:goalin/screens/action_menu.dart';
 import 'package:goalin/utils/goalin_colors.dart';
 import 'package:goalin/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ProductFormPage extends StatefulWidget{
     const ProductFormPage({super.key});
@@ -16,6 +21,7 @@ class _ProductFormPageState extends State<ProductFormPage>{
     final _formKey = GlobalKey<FormState>();
     String _name = "";
     int _price = 0;
+    int _stock = 0;
     String _desc = "";
     String _thumbnail = "";
     String _category = "outdoor";
@@ -28,6 +34,8 @@ class _ProductFormPageState extends State<ProductFormPage>{
     
     @override
     Widget build(BuildContext context){
+        final request = context.watch<CookieRequest>();
+
         return Scaffold(
             appBar: AppBar(
                 title: const Center(
@@ -97,6 +105,43 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                     onChanged: (value){
                                         setState(() {
                                           _price = int.tryParse(value) ?? 0;
+                                        });
+                                    },
+
+                                    validator: (value){
+                                        if(value == null || value.isEmpty){
+                                            return "Harga Produk tidak boleh kosong!";
+                                        }
+
+                                        if(int.tryParse(value)! <= 0){
+                                            return "Harga produk tidak boleh nol";
+                                        }
+
+                                        return null;
+
+                                    },
+
+                                ),
+                            ),
+
+                            //  Stock PRODUCT
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    decoration: InputDecoration(
+                                        hintText: "Stok Produk",
+                                        labelText: "Stok Produk",
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(5.0),
+                                            borderSide: BorderSide(color: Colors.black)
+                                        )
+                                    ),
+
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    onChanged: (value){
+                                        setState(() {
+                                          _stock = int.tryParse(value) ?? 0;
                                         });
                                     },
 
@@ -251,41 +296,39 @@ class _ProductFormPageState extends State<ProductFormPage>{
                                     style: ButtonStyle(
                                         backgroundColor: MaterialStateProperty.all(appColors['first']),
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                            return AlertDialog(
-                                                title: const Text('Berita berhasil disimpan!'),
-                                                content: SingleChildScrollView(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                    Text('Nama Produk: $_name'),
-                                                    Text('Harga Produk: $_price'),
-                                                    Text('Deskripsi Produk: $_desc'),
-                                                    Text('Kategori: ${_categories[_category]}'),
-                                                    Text('Thumbnail: $_thumbnail'),
-                                                    Text('Unggulan: ${_isFeatured ? "Ya" : "Tidak"}'),
-                                                    ],
-                                                ),
-                                                ),
-                                                actions: [
-                                                TextButton(
-                                                    child: const Text('OK'),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                      _formKey.currentState!.reset();
-                                                    },
-                                                ),
-                                                ],
-                                            );
-                                            },
+                                          final response = await request.postJson(
+                                          "http://localhost:8000/create-product-flutter/",
+                                          jsonEncode({
+                                            "name": _name,
+                                            "description": _desc,
+                                            "price": _price,
+                                            "stock": _stock,
+                                            "thumbnail": _thumbnail,
+                                            "category": _category,
+                                            "is_featured": _isFeatured,
+                                          }),
                                         );
-
+                                        if (context.mounted) {
+                                          if (response['status'] == 'success') {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text("Product successfully created!"),
+                                            ));
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => MyHomePage()),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text("Something went wrong, please try again."),
+                                            ));
+                                          }
                                         }
+                                      }
                                     },
                                     child: const Text(
                                         "Simpan",
